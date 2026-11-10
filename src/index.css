@@ -1,0 +1,212 @@
+@import "tailwindcss";
+@import "maplibre-gl/dist/maplibre-gl.css";
+
+@layer base {
+  :root {
+    --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans);
+    background-color: #F4F3EC;
+    color: #111111;
+    overflow: hidden;
+    user-select: none;
+  }
+}
+
+.font-mono-tech {
+  font-family: var(--font-mono);
+}
+
+/* Neobrutalist + Minimalist tactile utilities */
+.neo-card {
+  background-color: #F9F8F3;
+  border: 2px solid #111111;
+  box-shadow: 4px 4px 0px #111111;
+}
+
+.neo-card-sm {
+  background-color: #F9F8F3;
+  border: 1.5px solid #111111;
+  box-shadow: 3px 3px 0px #111111;
+}
+
+.neo-btn {
+  border: 1.5px solid #111111;
+  box-shadow: 2.5px 2.5px 0px #111111;
+  transition: transform 120ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 120ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 120ms ease;
+}
+
+.neo-btn:hover:not(:disabled) {
+  transform: translate(-1px, -1px);
+  box-shadow: 3.5px 3.5px 0px #111111;
+}
+
+.neo-btn:active:not(:disabled) {
+  transform: translate(1.5px, 1.5px);
+  box-shadow: 1px 1px 0px #111111;
+}
+
+/* ============ UI v5 DESIGN SYSTEM — hierarchy tokens ============ */
+/* Button ranks: EXACTLY ONE .btn-primary per visible view. */
+.btn-primary {
+  background-color: #E2FF32;
+  color: #111111;
+}
+.btn-secondary {
+  background-color: #F9F8F3;
+  color: #111111;
+}
+.btn-ghost {
+  background-color: transparent;
+  color: #111111;
+}
+.btn-ghost:hover:not(:disabled) {
+  background-color: #EAE8DF;
+}
+
+/* Semantic chips: one meaning app-wide. */
+.chip-good {
+  background-color: #E2FF32;
+  color: #111111;
+}
+.chip-warn {
+  background-color: #FF521B;
+  color: #FFFFFF;
+}
+.chip-neutral {
+  background-color: #111111;
+  color: #F9F8F3;
+}
+.chip-muted {
+  background-color: #EAE8DF;
+  color: #555550;
+}
+
+/* Hero KPI number — THE biggest text on any screen (summary-first hierarchy). */
+.kpi-hero-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+@media (min-width: 768px) {
+  .kpi-hero-num {
+    font-size: 28px;
+  }
+}
+
+/* Segmented tab bar. */
+.tab-seg {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 8px 12px;
+  border: 2px solid #111111;
+  cursor: pointer;
+  background-color: #F2F0E8;
+  color: #111111;
+  transition: background-color 100ms ease;
+  white-space: nowrap;
+}
+.tab-seg:hover {
+  background-color: #EAE8DF;
+}
+.tab-seg-active {
+  background-color: #E2FF32;
+  box-shadow: 2.5px 2.5px 0px #111111;
+}
+
+/* Menu row inside ⋮ dropdown panels. */
+.menu-row-label {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: #555550;
+}
+
+
+/* Custom MapLibre handle inner dots (outer Marker div is untouched so MapLibre translate3d never conflicts!) */
+.roof-vertex-dot {
+  width: 13px;
+  height: 13px;
+  background: #E2FF32;
+  border: 2px solid #111111;
+  box-shadow: 2px 2px 0px #111111;
+  cursor: grab;
+  transition: background-color 100ms ease;
+}
+
+.roof-vertex-dot:hover {
+  background: #FF521B;
+}
+
+.roof-vertex-dot:active {
+  cursor: grabbing;
+}
+
+.roof-midpoint-dot {
+  width: 9px;
+  height: 9px;
+  background: #FFFFFF;
+  border: 1.5px solid #111111;
+  border-radius: 9999px;
+  cursor: pointer;
+  opacity: 0.9;
+  transition: background-color 100ms ease;
+}
+
+.roof-midpoint-dot:hover {
+  background: #E2FF32;
+}
+
+/* Hide noisy default maplibre attribution clutter while keeping clean minimal badge */
+.maplibregl-ctrl-attrib {
+  font-family: var(--font-mono) !important;
+  font-size: 10px !important;
+  background: rgba(249, 248, 243, 0.88) !important;
+  border-top: 1.5px solid #111111 !important;
+  border-left: 1.5px solid #111111 !important;
+  border-radius: 0 !important;
+  padding: 2px 6px !important;
+}
+
+/* Subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #EAE8DF;
+}
+::-webkit-scrollbar-thumb {
+  background: #111111;
+}
+
+/* ==== REDESIGN FIX: Tailwind bg utilities must beat neo-* card backgrounds.
+   (Custom classes are unlayered so they win over @layer utilities; these
+   unlayered re-declarations restore the intended chip backgrounds.) ==== */
+.bg-\[\#111111\] { background-color: #111111; }
+.bg-\[\#FF521B\] { background-color: #FF521B; }
+.bg-\[\#E2FF32\] { background-color: #E2FF32; }
+.bg-\[\#F9F8F3\] { background-color: #F9F8F3; }
+.bg-\[\#EAE8DF\] { background-color: #EAE8DF; }
+.bg-white { background-color: #ffffff; }
